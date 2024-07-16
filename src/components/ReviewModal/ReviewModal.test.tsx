@@ -15,7 +15,9 @@ const mockReviews = [
         id: 1,
         productId: 1,
         rating: 5,
-        text: 'Great product!',
+        comment: 'Great product!',
+        reviewerName: 'John Doe',
+        date: '2024-05-23T08:56:21.619Z',
     },
 ];
 
@@ -25,7 +27,12 @@ describe('ReviewModal', () => {
 
         render(<ReviewModal product={mockProduct} onClose={jest.fn()} />);
 
-        await waitFor(() => expect(screen.getByText('Great product!')).toBeInTheDocument());
+        await waitFor(() => {
+            expect(screen.getByText('John Doe')).toBeInTheDocument();
+            expect(screen.getByText('Great product!')).toBeInTheDocument();
+            expect(screen.getByText(/5/)).toBeInTheDocument();
+            expect(screen.getByText('May 23, 2024')).toBeInTheDocument();
+        });
     });
 
     it('displays no reviews message', async () => {

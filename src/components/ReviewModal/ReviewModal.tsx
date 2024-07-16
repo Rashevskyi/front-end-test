@@ -7,7 +7,9 @@ interface Review {
     id: number;
     productId: number;
     rating: number;
-    text: string;
+    comment: string;
+    reviewerName: string;
+    date: string;
 }
 
 interface Product {
@@ -40,7 +42,31 @@ const ReviewBox = styled(Box)`
   padding: 12px;
   background-color: #f5f5f5;
   border-radius: 8px;
+  position: relative;
 `;
+
+const ReviewDate = styled(Typography)`
+  position: absolute;
+  right: 12px;
+  top: 12px;
+`;
+
+const getRatingColor = (rating: number): string => {
+    switch (rating) {
+        case 1:
+            return 'red';
+        case 2:
+            return 'orange';
+        case 3:
+            return '#ffac00';
+        case 4:
+            return '#88ac67';
+        case 5:
+            return 'green';
+        default:
+            return 'black';
+    }
+};
 
 const ReviewModal: React.FC<ReviewModalProps> = ({ product, onClose }) => {
     const [reviews, setReviews] = useState<Review[]>([]);
@@ -73,14 +99,20 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ product, onClose }) => {
                     </Box>
                 ) : (
                     reviews.length > 0 ? (
-                        reviews.map((review: any) => (
+                        reviews.map((review) => (
                             <ReviewBox key={review.id}>
-                                <Typography variant="body1" gutterBottom>
-                                    {review.text}
+                                <Typography variant="body2" color="textSecondary">
+                                    <strong>Reviewer Name:</strong> {review.reviewerName}
                                 </Typography>
-                                <Typography variant="caption" color="textSecondary">
-                                    Rating: {review.rating}
+                                <Typography variant="body2" color="textSecondary">
+                                    <strong>Comment:</strong> {review.comment}
                                 </Typography>
+                                <Typography variant="body2" color="textSecondary">
+                                    <strong>Rating:</strong> <strong style={{color: getRatingColor(review.rating)}}>{review.rating}</strong>
+                                </Typography>
+                                <ReviewDate variant="caption" color="textSecondary">
+                                    {new Date(review.date).toLocaleDateString("en", { year: 'numeric', month: 'long', day: 'numeric' })}
+                                </ReviewDate>
                             </ReviewBox>
                         ))
                     ) : (
