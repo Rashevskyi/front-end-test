@@ -22,7 +22,6 @@ interface ProductTableProps {
     onViewReviews: (product: Product) => void;
 }
 
-// Styled components for the table
 const StyledTableContainer = styled(TableContainer)`
   margin-top: 20px;
   background-color: #fff;
@@ -69,7 +68,11 @@ const ProductTable: React.FC<ProductTableProps> = ({ products, onViewReviews }) 
             accessorKey: 'actions',
             cell: ({ row }) => (
                 <ActionButtonGroup>
-                    <IconButton color="primary" onClick={() => onViewReviews(row.original)}>
+                    <IconButton
+                        color="primary"
+                        aria-label="view reviews"
+                        onClick={() => onViewReviews(row.original)}
+                    >
                         <VisibilityIcon />
                     </IconButton>
                 </ActionButtonGroup>

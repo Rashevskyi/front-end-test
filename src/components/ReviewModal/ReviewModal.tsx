@@ -20,7 +20,6 @@ interface ReviewModalProps {
     onClose: () => void;
 }
 
-// Styled components for the modal
 const StyledBox = styled(Box)`
   padding: 20px;
   background-color: white;

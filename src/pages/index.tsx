@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { GetServerSideProps, NextPage } from 'next';
 import styled from '@emotion/styled';
 import axios from 'axios';
-import ReviewModal from '../components/ReviewModal';
-import ProductsTable from '../components/ProductsTable';
-import ProtectedRoute from '../components/ProtectedRoute';
+import ReviewModal from '../components/ReviewModal/ReviewModal';
+import ProductsTable from '../components/ProductsTable/ProductsTable';
+import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
 
-interface Product {
+export interface Product {
     id: number;
     title: string;
     description: string;

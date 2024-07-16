@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { TextField, Button, Container, Box, Typography, Card, CardContent, Grid, Avatar } from '@mui/material';
 import styled from '@emotion/styled';
-import { useAuth } from '../context/AuthContext'; // Update the path if it differs
+import { useAuth } from '@/context/AuthContext/AuthContext';
 
 const schema = z.object({
     username: z.string().min(1, 'Username is required'),
