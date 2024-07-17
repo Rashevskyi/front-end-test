@@ -4,7 +4,7 @@ import axios from 'axios';
 import ProductsPage, { getServerSideProps } from '@/pages';
 import { GetServerSidePropsContext } from 'next';
 import ProductsTable from '@/components/ProductsTable/ProductsTable';
-import { Product } from '@/pages/index/index.types';
+import { Product } from '@/components/index/index.types';
 
 jest.mock('axios');
 jest.mock('../../routes/ProtectedRoute', () => ({

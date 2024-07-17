@@ -3,8 +3,8 @@ import { GetServerSideProps, NextPage } from 'next';
 import ReviewModal from '@/components/ReviewModal/ReviewModal';
 import ProductsTable from '@/components/ProductsTable/ProductsTable';
 import ProtectedRoute from '@/routes/ProtectedRoute';
-import { Product, ProductsPageProps } from '@/pages/index/index.types';
-import { StyledPageContainer } from '@/pages/index/index.styles';
+import { Product, ProductsPageProps } from '@/components/index/index.types';
+import { StyledPageContainer } from '@/components/index/index.styles';
 import { fetchProducts } from '@/utils/api';
 
 export const getServerSideProps: GetServerSideProps = async () => {

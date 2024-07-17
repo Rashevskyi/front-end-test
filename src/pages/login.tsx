@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Box, Typography, CardContent, Grid, Avatar, TextField } from '@mui/material';
-import { StyledCard, StyledButton } from '@/pages/login/login.styles';
-import { useLoginForm } from '@/pages/login/login.form';
+import { StyledCard, StyledButton } from '@/components/login/login.styles';
+import { useLoginForm } from '@/components/login/login.form';
 
 const LoginPage: React.FC = () => {
     const { register, handleSubmit, errors, onSubmit } = useLoginForm();
