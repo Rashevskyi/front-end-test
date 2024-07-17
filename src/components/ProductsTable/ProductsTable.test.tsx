@@ -1,12 +1,13 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import axios from 'axios';
-import ProductsPage, { getServerSideProps, Product } from '@/pages';
+import ProductsPage, { getServerSideProps } from '@/pages';
 import { GetServerSidePropsContext } from 'next';
 import ProductsTable from '@/components/ProductsTable/ProductsTable';
+import { Product } from '@/pages/index/index.types';
 
 jest.mock('axios');
-jest.mock('../ProtectedRoute/ProtectedRoute', () => ({
+jest.mock('../../routes/ProtectedRoute', () => ({
     __esModule: true,
     default: jest.fn(({ children }) => <div>{children}</div>),
 }));

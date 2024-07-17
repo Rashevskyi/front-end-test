@@ -1,90 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Modal, Box, Typography, CircularProgress, Divider } from '@mui/material';
-import axios from 'axios';
-import styled from '@emotion/styled';
-
-interface Review {
-    id: number;
-    productId: number;
-    rating: number;
-    comment: string;
-    reviewerName: string;
-    date: string;
-}
-
-interface Product {
-    id: number;
-    title: string;
-}
-
-interface ReviewModalProps {
-    product: Product;
-    onClose: () => void;
-}
-
-const StyledBox = styled(Box)`
-  padding: 20px;
-  background-color: white;
-  margin: auto;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  position: absolute;
-  width: 500px;
-  max-height: 80vh;
-  overflow-y: auto;
-  border-radius: 8px;
-  box-shadow: 0px 3px 6px #00000029;
-`;
-
-const ReviewBox = styled(Box)`
-  margin-bottom: 16px;
-  padding: 12px;
-  background-color: #f5f5f5;
-  border-radius: 8px;
-  position: relative;
-`;
-
-const ReviewDate = styled(Typography)`
-  position: absolute;
-  right: 12px;
-  top: 12px;
-`;
-
-const getRatingColor = (rating: number): string => {
-    switch (rating) {
-        case 1:
-            return 'red';
-        case 2:
-            return 'orange';
-        case 3:
-            return '#ffac00';
-        case 4:
-            return '#88ac67';
-        case 5:
-            return 'green';
-        default:
-            return 'black';
-    }
-};
+import { StyledBox, ReviewBox, ReviewDate, getRatingColor } from './ReviewModal.styles';
+import { ReviewModalProps } from './ReviewModal.types';
+import useReviews from '../../hooks/useReviews';
 
 const ReviewModal: React.FC<ReviewModalProps> = ({ product, onClose }) => {
-    const [reviews, setReviews] = useState<Review[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-
-    useEffect(() => {
-        const fetchReviews = async () => {
-            setLoading(true);
-            try {
-                const { data } = await axios.get(`https://dummyjson.com/products/${product.id}`);
-                setReviews(data.reviews);
-            } catch (error) {
-                console.error("Failed to fetch reviews", error);
-            }
-            setLoading(false);
-        };
-        fetchReviews();
-    }, [product]);
+    const { reviews, loading, error } = useReviews(product.id);
 
     return (
         <Modal open={Boolean(product)} onClose={onClose}>
@@ -97,6 +18,10 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ product, onClose }) => {
                     <Box display="flex" justifyContent="center" alignItems="center" height="100%">
                         <CircularProgress />
                     </Box>
+                ) : error ? (
+                    <Typography variant="body1" color="error">
+                        {error}
+                    </Typography>
                 ) : (
                     reviews.length > 0 ? (
                         reviews.map((review) => (

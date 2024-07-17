@@ -1,6 +1,8 @@
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import paths from '@/routes/paths';
+import { CircularProgress, Box } from '@mui/material';
 
 interface AuthContextProps {
     isAuthenticated: boolean;
@@ -37,8 +39,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         localStorage.removeItem('refreshToken');
         localStorage.removeItem('user');
         delete axios.defaults.headers.common['Authorization'];
-        router.push('/login');
+        router.push(paths.login);
     };
+
+    if (loading) {
+        return (
+            <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+                <CircularProgress />
+            </Box>
+        );
+    }
 
     return (
         <AuthContext.Provider value={{ isAuthenticated, loading, login, logout }}>

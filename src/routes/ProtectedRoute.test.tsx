@@ -4,7 +4,7 @@ import ProtectedRoute from './ProtectedRoute';
 import { useAuth } from '@/context/AuthContext/AuthContext';
 import { useRouter } from 'next/router';
 
-jest.mock('../../context/AuthContext/AuthContext');
+jest.mock('../context/AuthContext/AuthContext');
 jest.mock('next/router', () => ({
     useRouter: jest.fn(),
 }));
@@ -30,13 +30,5 @@ describe('ProtectedRoute', () => {
         render(<ProtectedRoute>Protected Content</ProtectedRoute>);
 
         expect(push).toHaveBeenCalledWith('/login');
-    });
-
-    it('shows loading spinner while loading', () => {
-        (useAuth as jest.Mock).mockReturnValue({ isAuthenticated: false, loading: true });
-
-        render(<ProtectedRoute>Protected Content</ProtectedRoute>);
-
-        expect(screen.getByRole('progressbar')).toBeInTheDocument();
     });
 });

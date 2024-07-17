@@ -1,54 +1,10 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import axios from 'axios';
-import { useRouter } from 'next/router';
-import { TextField, Button, Container, Box, Typography, Card, CardContent, Grid, Avatar } from '@mui/material';
-import styled from '@emotion/styled';
-import { useAuth } from '@/context/AuthContext/AuthContext';
-
-const schema = z.object({
-    username: z.string().min(1, 'Username is required'),
-    password: z.string().min(1, 'Password is required'),
-});
-
-type LoginFormInputs = z.infer<typeof schema>;
-
-const StyledCard = styled(Card)`
-  padding: 20px;
-  margin-top: 10vh;
-  box-shadow: 0px 3px 6px #00000029;
-`;
-
-const StyledButton = styled(Button)`
-  margin-top: 20px;
-`;
+import { Container, Box, Typography, CardContent, Grid, Avatar, TextField } from '@mui/material';
+import { StyledCard, StyledButton } from '@/pages/login/login.styles';
+import { useLoginForm } from '@/pages/login/login.form';
 
 const LoginPage: React.FC = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm<LoginFormInputs>({
-        resolver: zodResolver(schema),
-    });
-    const router = useRouter();
-    const { login } = useAuth();
-
-    const onSubmit = async (data: LoginFormInputs) => {
-        try {
-            const response = await axios.post('https://dummyjson.com/auth/login', data);
-            if (response.status === 200) {
-                const { token, refreshToken, ...userData } = response.data;
-                localStorage.setItem('token', token);
-                localStorage.setItem('refreshToken', refreshToken);
-                localStorage.setItem('user', JSON.stringify(userData));
-
-                login(token);
-
-                router.push('/');
-            }
-        } catch (error) {
-            console.error('Login failed', error);
-        }
-    };
+    const { register, handleSubmit, errors, onSubmit } = useLoginForm();
 
     return (
         <Container maxWidth="sm">
@@ -56,7 +12,7 @@ const LoginPage: React.FC = () => {
                 <CardContent>
                     <Box display="flex" flexDirection="column" alignItems="center">
                         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                            {/* You can use a Material-UI icon or another avatar */}
+
                         </Avatar>
                         <Typography variant="h4" component="h1" gutterBottom>
                             Login
